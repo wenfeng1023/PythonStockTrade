@@ -67,4 +67,6 @@ print(stats)
 bt.plot(
         smooth_equity=True,
         superimpose=True,
+        filename='TQQQ',
+        show_legend=True
     )
