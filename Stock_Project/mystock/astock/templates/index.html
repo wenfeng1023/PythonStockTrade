@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <title>Upload Files</title>
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+     <link rel ='stylesheet' href="{% static 'js/bootstrap.min.js'%}">
+     <link rel ='stylesheet' href="{% static 'js/bootstrap.js'%}">
+     <link rel ='stylesheet' href="{% static 'js/jquery.js'%}">
+     <link rel ='stylesheet' href="{% static 'js/bootstrap-dropdown.js'%}">
+     <link rel ='stylesheet' href="{% static 'js/bootstrap.min.js'%}">
+     <link href="{% static 'css/sigin.css'%}" rel="stylesheet">
+
+</head>
+<style>   
+
+</style>
+
+<body class="text-center">
+    
+     <main class="form-signin">
+       <form method="post" enctype="multipart/form-data" name="fname">
+          {% csrf_token %}
+          <img class="mb-4" src="{% static 'picture/logo.png'%}" alt="" width="72" height="57">
+     
+          <div class="form-floating">
+               
+               <input type="text" class = 'form-group' id="fname" name="fname" style="text-transform:uppercase;" placeholder= 'Please input stock name'>
+          </div>
+          </br>
+          
+          <div class="form-floating">              
+               <input type="date" class = 'form-group' id="start" name="start" placeholder= 'Please input start time'>
+               <p></p>
+               <input type="date" class = 'form-group' id="end" name="end" placeholder= 'Please input end time'>
+          </div>
+          </br>
+          <div class="dropdown">
+               <select class="form-select" aria-label="Default select example" name = 'strategy'>
+                    <option selected>Open this select strategy</option>
+                    <option value="three_days_line">three_days_line</option>
+                    <option value="sam_ris">sam_ris</option>
+                    <option value="bbands">BBands</option>
+                    <option value="3">ThreeLines</option>
+               </select>               
+          </div>         
+          </br>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+          <p class="mt-5 mb-3 text-muted">&copy; 2021–2022</p>
+          </form>
+     </main>
+</body>
+</html>
