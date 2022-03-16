@@ -13,6 +13,9 @@
      <link rel ='stylesheet' href="{% static 'js/bootstrap-dropdown.js'%}">
      <link rel ='stylesheet' href="{% static 'js/bootstrap.min.js'%}">
      <link href="{% static 'css/sigin.css'%}" rel="stylesheet">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous">
+     </script>
 
 </head>
 <style>   
@@ -38,19 +41,64 @@
                <input type="date" class = 'form-group' id="end" name="end" placeholder= 'Please input end time'>
           </div>
           </br>
+          <div class="form-check">
+               <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value='Close' checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Close
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value = 'Ad_Close'>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Adjust Close
+                    </label>
+               </div>
+          </br>
           <div class="dropdown">
-               <select class="form-select" aria-label="Default select example" name = 'strategy'>
+               <select class="form-select" aria-label="Default select example" name = 'strategy' id = "TypeOfConstruction">
                     <option selected>Open this select strategy</option>
                     <option value="three_days_line">three_days_line</option>
                     <option value="sam_ris">sam_ris</option>
                     <option value="bbands">BBands</option>
-                    <option value="3">ThreeLines</option>
+                    <option value="Sma_St">SMA</option>
+                    <option value="Double_SMA">Double_SMA</option>
                </select>               
           </div>         
+          </br>
+          <div class="form-group" id="timber-frame-fieldset"  style="display:none;">
+               <label for="PartyWalls">Please input period (EX: 5,20,35)</label>
+                   <br><input type="input" name = 'period'> 
+          </div>
+          </br>
+          <div class="form-group" id="double_period"  style="display:none;">
+               <label for="PartyWalls">Please input period (SMA2>SMA1)</label>
+                   <br>SMA1: <input type="input" name = 'period1'> </br>
+                   <br>SMA2: <input type="input" name = 'period2'> 
+          </div>
           </br>
           <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
           <p class="mt-5 mb-3 text-muted">&copy; 2021–2022</p>
           </form>
      </main>
+
+<script>
+     $(document).ready(function(){
+          $("#TypeOfConstruction").on("change", function(e){
+            var v = $(this).val();
+            if(v == 'Sma_St') {
+              $("#timber-frame-fieldset").slideDown();
+            } else {
+              $("#timber-frame-fieldset").slideUp();
+            }
+            if (v =='Double_SMA'){
+              $("#double_period").slideDown();
+            } else{
+              $("#double_period").slideUp();
+          }
+          });
+        });
+
+</script>
 </body>
 </html>

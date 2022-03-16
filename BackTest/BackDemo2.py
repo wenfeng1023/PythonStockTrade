@@ -6,7 +6,6 @@ import datetime as dt
 import matplotlib.pylab as plt
 from backtrader_plotting import Bokeh
 from backtrader_plotting.schemes import Tradimo
-from sqlalchemy import false
 
 def get_stock_data(name):
     Stock_datasets = pdr.get_data_yahoo(name)
@@ -80,6 +79,7 @@ if __name__ == '__main__':
     data['ac'] =data['Adj Close']
 
 
+
     # brf_daily = bt.feeds.PandasData(dataname=data,name='TQQQ',
     # fromdate= dt.datetime(2019,1,1),
     # todate=dt.datetime(2020,12,31))
@@ -93,8 +93,8 @@ if __name__ == '__main__':
     cerebro.addstrategy(MyStrategy)
 
     cerebro.run()
-    cerebro.plot(style='candle')
-    # b = Bokeh(style='bar',tabs='multi',output_mode='show', scheme=Tradimo())
-    # cerebro.plot(b)
+    # cerebro.plot(style='candle')
+    b = Bokeh(style='bar',tabs='multi',output_mode='show', scheme=Tradimo())
+    cerebro.plot(b)
  
 

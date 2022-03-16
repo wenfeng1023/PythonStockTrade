@@ -32,7 +32,11 @@ def index(request):
         start = request.POST['start']
         end = request.POST['end']
         strategy = request.POST['strategy']
-        run_bt(name,strategy,start,end)            
+        period = request.POST['period']
+        period1 = request.POST['period1']
+        period2 = request.POST['period2']
+        selection = request.POST['flexRadioDefault']
+        run_bt(name,strategy,period,period1,period2, selection,start,end)            
               
         return render(request,'test.html',locals())
     else:

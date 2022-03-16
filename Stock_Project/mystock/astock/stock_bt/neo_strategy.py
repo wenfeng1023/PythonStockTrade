@@ -1,5 +1,6 @@
 import backtrader as bt
 
+
 '''
     sam_ris Strategy
 
@@ -74,3 +75,48 @@ class Momentum (bt.Strategy):
         pass
     def next (self):
         pass
+'''
+    Simple Moving Average Strategy
+'''
+
+class Sma_St (bt.Strategy):
+    params = (('myperiod',20),)
+    def __init__(self):
+        self.sma = bt.indicators.SMA(self.data.close, period = self.p.myperiod)
+        self.buy_sell_signal = bt.indicators.CrossOver(self.data.close,self.sma)
+        
+    def next (self):
+        if not self.position and self.buy_sell_signal>0:
+            self.order = self.buy()
+        if self.getposition().size<0 and self.buy_sell_signal>0: 
+            self.order = self.close()
+            self.order = self.buy()
+        if not self.position and self.buy_sell_signal<0:
+            self.order = self.sell()
+        if self.getposition().size>0 and self.buy_sell_signal<0:
+            self.order = self.close()
+            self.order = self.sell()
+'''
+    Double Simple Moving Average Strategy
+'''
+class Double_SMA (bt.Strategy):
+    params = (('myperiod1',5),('myperiod2',20),)
+    def __init__(self):
+        self.sma1 = bt.indicators.SMA(self.data.close,period = self.p.myperiod1)
+        self.sma2 = bt.indicators.SMA(self.data.close, period = self.p.myperiod2)
+        self.buy_sell_signal = bt.indicators.CrossOver(self.sma1,self.sma2)
+
+    def next (self):
+        if not self.position and self.buy_sell_signal>0:
+            self.order = self.buy()
+        if self.getposition().size<0 and self.buy_sell_signal>0: 
+            self.order = self.close()
+            self.order = self.buy()
+        if not self.position and self.buy_sell_signal<0:
+            self.order = self.sell()
+        if self.getposition().size>0 and self.buy_sell_signal<0:
+            self.order = self.close()
+            self.order = self.sell()
+
+        
+
