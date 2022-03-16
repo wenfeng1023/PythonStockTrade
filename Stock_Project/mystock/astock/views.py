@@ -9,6 +9,7 @@ import os
 from django.utils.http import urlquote
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from astock.stock_bt.neo_run import run_bt
+from pandas_datareader._utils import RemoteDataError
 
 
 
@@ -36,7 +37,13 @@ def index(request):
         period1 = request.POST['period1']
         period2 = request.POST['period2']
         selection = request.POST['flexRadioDefault']
-        run_bt(name,strategy,period,period1,period2, selection,start,end)            
+
+        try:
+            run_bt(name,strategy,period,period1,period2, selection,start,end)
+        except RemoteDataError:        
+            return HttpResponse('Please input correct Code of Stock')
+        except IndexError:
+            return HttpResponse('\n Please input correct Start time and End time')
               
         return render(request,'test.html',locals())
     else:

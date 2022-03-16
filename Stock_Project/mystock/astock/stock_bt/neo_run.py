@@ -1,8 +1,10 @@
 import backtrader as bt
 import pandas_datareader as pdr
+from pandas_datareader._utils import RemoteDataError
 from backtrader_plotting import Bokeh
 from backtrader_plotting.schemes import Tradimo
 from astock.stock_bt.neo_strategy import*
+
 
 def get_data(name, start=None,end=None):
     if start =='' and end =='':
@@ -32,7 +34,6 @@ def run_bt(name,strategy,period,period1,period2,selection,start =None,end=None):
     cerebro = bt.Cerebro()
     data = get_data(name,start,end)
 
-    
     strategy =  eval(strategy)
 
     if period == '' and period1=='' or period2=='':
