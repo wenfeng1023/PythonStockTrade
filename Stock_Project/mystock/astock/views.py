@@ -38,10 +38,12 @@ def index(request):
         period2 = request.POST['period2']
         selection = request.POST['flexRadioDefault']
 
+        html = "<html><body><center><p> Please input correct Code of Stock</p> </center></body></html>"
+
         try:
             run_bt(name,strategy,period,period1,period2, selection,start,end)
         except RemoteDataError:        
-            return HttpResponse('Please input correct Code of Stock')
+            return HttpResponse(html)
         except IndexError:
             return HttpResponse('\n Please input correct Start time and End time')
               
