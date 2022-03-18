@@ -60,22 +60,29 @@ class three_days_line(bt.Strategy):
 
 '''
 class bbands(bt.Strategy):
+    def log(self, txt, dt=None):
+        dt = dt or self.data.datetime[0]
+        if isinstance(dt, float):
+            dt = bt.num2date(dt)
+        print('%s, %s' % (dt.isoformat(), txt))
+
     def __init__(self):
         # self.bbbands = bt.indicators.BollingerBands(self.data.close)
         self.bbbands = bt.indicators.BollingerBandsPct(self.data.close)
         self.buy_signal = bt.indicators.CrossOver(self.data.close,self.bbbands.bot)
         self.sell_sigal = bt.indicators.CrossOver(self.data.close, self.bbbands.lines.top)
     def next (self):
+        self.log('MaxDrawDown: %.2f' % self.stats.drawdown.maxdrawdown[-1])
         if not self.position and self.buy_signal<0:
-            self.order = self.buy()
+            self.order = self.buy(size=100)
         if self.getposition().size<0 and self.buy_signal<0: 
             self.order = self.close()
-            self.order = self.buy()
+            self.order = self.buy(size=100)
         if not self.position and self.sell_sigal>0:
-            self.order = self.sell()
+            self.order = self.sell(size=100)
         if self.getposition().size>0 and self.sell_sigal>0:
             self.order = self.close()
-            self.order = self.sell()
+            self.order = self.sell(size=100)
 
 '''
     Momentum Strategy

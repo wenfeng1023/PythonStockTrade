@@ -49,16 +49,34 @@ def run_bt(name,strategy,period,period1,period2,selection,start =None,end=None):
         pass
 
 
+    
+
+
     brf_daily = bt.feeds.PandasData(dataname=data,name=name)
     cerebro.adddata(brf_daily)
+
+    # Add observer
+
+    cerebro.addobserver(bt.observers.DrawDown)
+    cerebro.addobserver(bt.observers.TimeReturn)
+    # cerebro.addobserver(bt.observers.LogReturns)
+    cerebro.addobserver(bt.observers.FundValue)
+
     cerebro.addanalyzer(bt.analyzers.AnnualReturn, _name='_AnnualReturn')
+    cerebro.addanalyzer(bt.analyzers.SQN,_name='_SQN')
     cerebro.addanalyzer(bt.analyzers.DrawDown,_name='_DrawDown')
     cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name='_SharpeRatio')
     cerebro.addanalyzer(bt.analyzers.TradeAnalyzer,_name='_tradeanalyzer')
+    cerebro.addanalyzer(bt.analyzers.PyFolio,_name='_PyFolio')
 
     result = cerebro.run()
+    print("--------------- AnnualReturn -----------------")
+    print(result[0].analyzers._AnnualReturn.get_analysis())
     print("--------------- DrawDown -----------------")
     print(result[0].analyzers._DrawDown.get_analysis())
+    print("--------------- SQN -----------------")
+    print(result[0].analyzers._SQN.get_analysis())
+
 
     b = Bokeh(style='bar',tabs='multi',output_mode='save', scheme=Tradimo(),filename='./astock/templates/test.html')
     cerebro.plot(b)
