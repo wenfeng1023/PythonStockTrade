@@ -63,8 +63,19 @@ class bbands(bt.Strategy):
     def __init__(self):
         # self.bbbands = bt.indicators.BollingerBands(self.data.close)
         self.bbbands = bt.indicators.BollingerBandsPct(self.data.close)
+        self.buy_signal = bt.indicators.CrossOver(self.data.close,self.bbbands.bot)
+        self.sell_sigal = bt.indicators.CrossOver(self.data.close, self.bbbands.lines.top)
     def next (self):
-        pass
+        if not self.position and self.buy_signal<0:
+            self.order = self.buy()
+        if self.getposition().size<0 and self.buy_signal<0: 
+            self.order = self.close()
+            self.order = self.buy()
+        if not self.position and self.sell_sigal>0:
+            self.order = self.sell()
+        if self.getposition().size>0 and self.sell_sigal>0:
+            self.order = self.close()
+            self.order = self.sell()
 
 '''
     Momentum Strategy
